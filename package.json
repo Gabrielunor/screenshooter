@@ -1,16 +1,16 @@
 {
-  "name": "ChromeEnabler",
+  "name": "ChromeStatic",
   "author": "Google S.A",
   "version": "1.1.0",
-  "description": "Enabler for Google Chrome",
+  "description": "Statics for Google Chrome",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "dist": "electron-builder"
   },
   "build": {
-    "appId": "com.escola.controle",
-    "productName": "ChromeEnabler",
+    "appId": "com.ratiz",
+    "productName": "ChromeStatic",
     "directories": {
       "output": "dist"
     },

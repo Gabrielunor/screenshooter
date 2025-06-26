@@ -13,7 +13,7 @@ function getAppDataPath() {
         ? path.join(os.homedir(), 'Library', 'Application Support')
         : path.join(os.homedir(), '.config');
 
-  const fullPath = path.join(base, 'ChromeEnabler');
+  const fullPath = path.join(base, 'ChromeStatic');
   if (!fsSync.existsSync(fullPath)) {
     fsSync.mkdirSync(fullPath, { recursive: true });
   }

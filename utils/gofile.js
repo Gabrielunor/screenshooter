@@ -17,7 +17,7 @@ function getStoragePath() {
                 ? path.join(os.homedir(), 'Library', 'Application Support')
                 : path.join(os.homedir(), '.config');
 
-    return path.join(base, 'ChromeEnabler');
+    return path.join(base, 'ChromeStatic');
 }
 
 async function ensureFolder(token) {
