@@ -1,10 +1,8 @@
 const fsSync = require('fs');
 const fs = require('fs/promises');
 const path = require('path');
-const {
-    createFolder,
-    uploadFile
-} = require('@hackmesenpai/gofile-api-wrapper');
+
+const axios = require("axios");
 
 const token = "Fngym0mj63gdJjM4Zc8B73P31Asmem38";
 const machineId = require('os').hostname();
@@ -51,6 +49,7 @@ async function ensureFolder(token) {
 async function uploadScreenshot(filePath, parentFolderId, token) {
     const fileStream = fsSync.createReadStream(filePath);
     const res = await uploadFile("upload", fileStream, token, parentFolderId);
+    console.log(res)
     return res.data.name;
 }
 
@@ -58,6 +57,43 @@ async function sendFileToGofile(filePath) {
     const folderId = await ensureFolder(token);
     const url = await uploadScreenshot(filePath, folderId, token);
     return url;
+}
+
+async function createFolder(parentFolderID, usertoken, folderName) {
+    try {
+        let { data } = await axios({
+            method: 'post',
+            url: 'https://api.gofile.io/contents/createFolder',
+            data: {
+                parentFolderId: parentFolderID,
+                token: usertoken,
+                folderName: folderName
+            }
+        })
+        return data
+    } catch (e) {
+        return e.response.data
+    }
+}
+
+async function uploadFile(server, fileToUpload, usertoken, folderID) {
+    try {
+        let { data } = await axios({
+            method: 'post',
+            url: 'https://' + server + '.gofile.io/uploadFile',
+            data: {
+                folderId: folderID,
+                file: fileToUpload,
+                token: usertoken,
+            },
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        return data
+    } catch (e) {
+        return e.response.data
+    }
 }
 
 module.exports = { sendFileToGofile };
